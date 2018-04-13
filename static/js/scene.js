@@ -1,40 +1,45 @@
-const three = window.THREE
+const Three = window.THREE
 
-const scene = new three.Scene()
-const camera = new three.PerspectiveCamera(90, window.innerWidth / window.innerHeight, 0.1, 1000)
+const scene = new Three.Scene()
 
-// const geometry = new three.BoxGeometry(1, 1, 1)
-const material = new three.MeshBasicMaterial({ color: 0x0000ff00 })
-// const cube = new three.Mesh(geometry, material)
-// scene.add(cube)
+const playerCam = new Three.PerspectiveCamera(90,
+  window.innerWidth / window.innerHeight,
+  1, 1000)
+playerCam.position.y = 2
+playerCam.rotation.x = -Math.PI / 2
 
-const tetrahedron = new three.TetrahedronGeometry()
-const pyra = new three.Mesh(tetrahedron, material)
+const mapCam = new Three.OrthographicCamera(
+  -window.innerWidth / 32, window.innerWidth / 32,
+  window.innerHeight / 32, -window.innerHeight / 32,
+  1, 1000)
+mapCam.position.y = 16
+mapCam.rotation.x = -Math.PI / 2
+
+const cameras = {
+  player: playerCam,
+  map: mapCam
+}
+
+const green = new Three.MeshBasicMaterial({ color: 0x0000ff00 })
+const tetrahedron = new Three.TetrahedronGeometry()
+const pyra = new Three.Mesh(tetrahedron, green)
+pyra.position.z = -32
 scene.add(pyra)
 
-// const normal = new three.Vector3(0, 1, 0)
-// const plane = new three.Plane(normal)
-// const floor = new three.PlaneHelper(plane, 512, 0x0000ff)
+// const normal = new Three.Vector3(0, 1, 0)
+// const plane = new Three.Plane(normal)
+// const floor = new Three.PlaneHelper(plane, 512, 0x0000ff)
 // scene.add(floor)
 
-const size = 1024
+const size = 256
 const divisions = size // Unit grid
 const centerColor = 0x0000ff
 const gridColor = centerColor
-const gridHelper = new three.GridHelper(size, divisions, centerColor, gridColor)
+const gridHelper = new Three.GridHelper(size, divisions, centerColor, gridColor)
 scene.add(gridHelper)
 
-// Temporary - top view cam
-Object.assign(camera.position, {
-  x: 0,
-  y: 16,
-  z: 0
-})
-Object.assign(camera.rotation, {
-  x: -Math.PI / 2
-})
-
-var renderer = new three.WebGLRenderer(scene, camera)
+const camera = cameras.map
+var renderer = new Three.WebGLRenderer(scene, camera)
 renderer.setSize(window.innerWidth, window.innerHeight)
 
 window.game = {
@@ -43,6 +48,6 @@ window.game = {
   renderer,
   obstacles: [
     pyra
-  ],
+  ]
 }
 document.body.appendChild(renderer.domElement)
