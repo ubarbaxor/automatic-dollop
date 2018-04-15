@@ -1,23 +1,18 @@
-const gameLoop = game => {
-  game.obstacles.forEach(obj => {
-    obj.position.z += 0.016
-    obj.rotation.y += -Math.PI / 128
-  })
-}
+window.game.controls = new THREE.OrbitControls(window.game.camera)
 
 const animate = _ => {
   const {
     game: {
       scene,
       camera,
+      controls,
       renderer
     }
   } = window
 
   window.requestAnimationFrame(animate)
 
-  gameLoop(window.game)
-
+  controls.update()
   renderer.render(scene, camera)
 }
 

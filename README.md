@@ -1,10 +1,26 @@
 # automatic-dollop
-Three.js experiments and stuff
+Three.js experiments and stuff.
 
-## Get running :
+Might become a game later on ?
 
-This runs nice and easy using Docker. Follow [their instructions][1] or (on debian 9) :
-```
+## Roadmap:
+
+* Scene
+  - Models
+    * [ ] Ship
+    * [ ] Obstacle
+    * [ ] Power-up
+* Engine
+  - Controls
+    * [ ] Ship
+
+> Stuff in `scripts/` use Docker.
+
+#### Installing Docker:
+⚠️ Copy-paste code at your own risks ⚠️
+
+I recommend you follow [official instructions][1] and have only reproduced Debian 9 install procedure here for personal use.
+```Shell
 # Clear previous versions
 sudo apt-get remove docker docker-engine docker.io
 
