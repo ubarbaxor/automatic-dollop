@@ -9,10 +9,8 @@ const scene = new THREE.Scene()
 const playerCam = new THREE.PerspectiveCamera(90,
   window.innerWidth / window.innerHeight,
   1, 1000)
-playerCam.up = Z
-playerCam.position.y = -2
 playerCam.position.z = 2
-playerCam.lookAt(new THREE.Vector3(0, 1024, 2))
+// playerCam.lookAt(new THREE.Vector3(0, 0, -1024))
 
 const frustumSize = 16
 const mapCam = new THREE.OrthographicCamera(
@@ -37,24 +35,26 @@ const cameras = {
   side: sideCam
 }
 
-const green = new THREE.MeshBasicMaterial({ color: 0x0000ff00 })
-const tetrahedron = new THREE.TetrahedronGeometry()
-const pyra = new THREE.Mesh(tetrahedron, green)
+const green = new Three.MeshBasicMaterial({ color: 0x0000ff00 })
+const tetrahedron = new Three.TetrahedronGeometry()
+const pyra = new Three.Mesh(tetrahedron, green)
+pyra.position.z = -8
+pyra.rotation.y = Math.PI / 4
+pyra.rotation.x = Math.PI / 2 + Math.PI / 3
+
 scene.add(pyra)
 
-const plane = new THREE.Plane(Z)
-const floor = new THREE.PlaneHelper(plane, 8, 0x0000ff)
-scene.add(floor)
+const size = 256
+const divisions = size // Unit grid
+const centerColor = 0x00ff00
+const gridColor = 0x0000ff
+const gridHelper = new Three.GridHelper(size, divisions, centerColor, gridColor)
+// const normal = new Three.Vector3(0, 1, 0)
+// const plane = new Three.Plane(normal)
+scene.add(gridHelper)
 
-// const size = 256
-// const divisions = size // Unit grid
-// const centerColor = 0x0000ff
-// const gridColor = centerColor
-// const gridHelper = new THREE.GridHelper(size, divisions, centerColor, gridColor)
-// scene.add(gridHelper)
-
-const camera = cameras.map
-var renderer = new THREE.WebGLRenderer(scene, camera)
+const camera = cameras.player
+var renderer = new Three.WebGLRenderer(scene, camera)
 renderer.setSize(window.innerWidth, window.innerHeight)
 
 window.game = {
