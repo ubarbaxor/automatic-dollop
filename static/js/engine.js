@@ -14,6 +14,7 @@ window.game.loop = game => {
     // console.log(obj, obj.quaternion)
     // obj.quaternion.applyQuaternion( rotation )
   })
+  window.game.controls.target = game.obstacles[0].position
 }
 
 const animate = _ => {
